@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>leelawadee</name>
+  <version>1.0.0</version>
+  <description>
+    ROS packages fot the leelawadee (meta package)
+  </description>
+  <license>Apache 2.0</license>
+  <license>BSD</license>
+  <author email="sweilz.w@gmail.com">Liews Wuttipat</author>
+  <maintainer email="sweilz.w@gmail.com">Liews Wuttipat</maintainer>
+  <!-- <url type="website">http://wiki.ros.org/leelawadee</url> -->
+  <url type="repository">https://github.com/SweiLz/Leelawadee</url> 
+  <url type="bugtracker">https://github.com/SweiLz/Leelawadee/issues</url> 
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>leelawadee_bringup</exec_depend>
+  <exec_depend>leelawadee_description</exec_depend>
+  <!-- <exec_depend>leelawadee_example</exec_depend> -->
+  <exec_depend>leelawadee_mbed</exec_depend>
+  <!-- <exec_depend>leelawadee_navigation</exec_depend> -->
+  <!-- <exec_depend>leelawadee_slam</exec_depend> -->
+  <!-- <exec_depend>leelawadee_teleop</exec_depend> -->
+  <export><metapackage/></export>
+</package>
