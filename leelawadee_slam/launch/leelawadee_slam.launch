@@ -1,0 +1,18 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="slam_methods" default="hector" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+    <arg name="open_rviz" default="true"/>
+    
+    <!-- AUNCHAN -->
+    <include file="$(find leelawadee_bringup)/launch/leelawadee_core.launch"/>
+    
+    <!-- rviz -->
+    <group if="$(arg open_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" required="true"
+              args="-d $(find leelawadee_slam)/cfg/leelawadee_$(arg slam_methods).rviz"/>
+    </group>
+    
+    <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration-->
+    <include file="$(find leelawadee_slam)/launch/leelawadee_$(arg slam_methods).launch"/>
+
+</launch>

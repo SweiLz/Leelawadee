@@ -1,6 +1,6 @@
 #http://www.reactivated.net/writing_udev_rules.html
 
-#sudo cp 99-aunchan.rules /etc/udev/rules.d/
+#sudo cp 99-leelawadee.rules /etc/udev/rules.d/
 #sudo udevadm control --reload-rules
 #sudo udevadm trigger
 
