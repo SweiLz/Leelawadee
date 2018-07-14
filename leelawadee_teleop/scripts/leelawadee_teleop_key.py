@@ -4,17 +4,11 @@ import rospy
 from geometry_msgs.msg import Twist
 import sys, select, termios, tty
 
-BURGER_MAX_LIN_VEL = 0.22
-BURGER_MAX_ANG_VEL = 2.84
-
-WAFFLE_MAX_LIN_VEL = 0.26
-WAFFLE_MAX_ANG_VEL = 1.82
-
-MAX_LIN_VEL = 0.22
-MAX_ANG_VEL = 0.5
+MAX_LIN_VEL = 0.18
+MAX_ANG_VEL = 0.6
 
 LIN_VEL_STEP_SIZE = 0.01
-ANG_VEL_STEP_SIZE = 0.1
+ANG_VEL_STEP_SIZE = 0.05
 
 msg = """
 Control Your Leelawadee
@@ -24,8 +18,8 @@ Moving around:
    a    s    d
         x
 
-w/x : increase/decrease linear velocity ~ 0.22
-a/d : increase/decrease angular velocity ~ 1.82
+w/x : increase/decrease linear velocity ~ 0.18
+a/d : increase/decrease angular velocity ~ 0.6
 
 space key, s : force stop
 
@@ -126,10 +120,10 @@ if __name__=="__main__":
 
             twist = Twist()
 
-            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
+            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/4.0))
             twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
 
-            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
+            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP_SIZE/4.0))
             twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
 
             pub.publish(twist)

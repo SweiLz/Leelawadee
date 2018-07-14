@@ -1,18 +1,25 @@
 <launch>
-<!--	<include file="$(find leelawadee_mbed)/launch/leelawadee_mbed.launch">
+    <!--	<include file="$(find leelawadee_mbed)/launch/leelawadee_mbed.launch">
 		<arg name="imu_topic" value="imu/data"/> 
 		<arg name="port" value="/dev/ttySTM32"/>
 		<arg name="baud" value="250000"/>
 	</include> -->
-	<!-- <include file="$(find ydlidar)/launch/lidar.launch">
+    <!-- <include file="$(find ydlidar)/launch/lidar.launch">
         <arg name="port" default="/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0"/>
 	    <arg name="baudrate" default="128000"/>
 		<>
-    </include> -->
-<node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
-        args="0.1 0.0 0.15 0.0 0.0 0.0 base_link laser 100"/>
-	<node name="urg_node" pkg="urg_node" type="urg_node">
-		
-	</node>
+    			</include> -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.1 0.0 0.15 0.0 0.0 0.0 base_link laser 100"/>
+
+    <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
+        <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
+        <param name="serial_baud" value="115200"/>
+        <param name="frame_id" value="laser"/>
+        <param name="calibrate_time" value="true"/>
+        <param name="publish_intensity" value="false"/>
+        <param name="publish_multiecho" value="false"/>
+        <param name="angle_min" value="-1.5707963"/>
+        <param name="angle_max" value="1.5707963"/>
+    </node>
 
 </launch>

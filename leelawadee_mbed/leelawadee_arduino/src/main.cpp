@@ -56,18 +56,18 @@ void loop() {
     // digitalWrite(LED_BUILTIN,HIGH);
     // delay(500);
     // digitalWrite(LED_BUILTIN,LOW);
-    // delay(500);
+    // delay(500)
     if(Serial.available())
     {
         int16_t speed = Serial.parseInt();
         if(speed > 0)
-        setSpeedRaw(2,speed);
+        setSpeedRaw(1,speed);
 
     }
 }
 void setSpeedRaw(int8_t Id,int16_t RawSpeed)
 {
-    sprintf(command,"#%dP%dT0\r\n",Id,RawSpeed);
+    sprintf(command,"#%dP%dT100\r\n",Id,RawSpeed);
     Serial.print(command);
     motor.print(command);
 }
