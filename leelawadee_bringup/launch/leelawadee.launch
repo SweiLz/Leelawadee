@@ -1,0 +1,50 @@
+<launch>
+    <!-- Launch parameters -->
+    <arg name="wheel_separation" default="0.5"/>
+    <arg name="wheel_radius" default="0.102"/>
+    <arg name="use_imu" default="false"/>
+    <arg name="use_lidar" default="false"/>
+
+    <!-- TF setting -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.05 0 0 0 /base_footprint /base_link 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0 0 0 0 /base_link /laser_link 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2imu_link" args="0 0 0 0 0 0 /base_link /imu_link 10"/>
+
+    <!-- Lidar -->
+    <group if="$(arg use_lidar)">
+        <node name="ydlidar_node" pkg="ydlidar" type="ydlidar_node" output="screen">
+            <param name="port" type="string" value="/dev/ttyLidarG4"/>
+            <param name="baudrate" type="int" value="128000"/>
+            <param name="frame_id" type="string" value="laser_link"/>
+            <param name="samp_rate" type="int" value="9"/>
+            <param name="frequency" type="double" value="9.0" />
+            <param name="angle_min" type="double" value="-180" />
+            <param name="angle_max" type="double" value="180" />
+            <param name="range_min" type="double" value="0.3" />
+            <param name="range_max" type="double" value="16.0" />
+        </node>
+    </group>
+
+    <group if="$(arg use_imu)">
+
+    </group>
+
+    <group unless="$(arg use_imu)">
+        <node name="base_control" pkg="leelawadee_mbed" type="base_control.py" output="screen">
+            
+            <param name="base_id" value="base_footprint"/>
+            <param name="odom_id" value="odom"/>
+            <param name="odom_topic" value="/odom"/>
+            <param name="odom_freq" value="50"/>
+            <param name="cmd_freq" value="10"/>
+
+            <param name="port" value="/dev/ttySTM32"/>
+            <param name="baudrate" value="115200"/>
+            <param name="wheel_separation" value="$(arg wheel_separation)"/>
+            <param name="wheel_radius" value="$(arg wheel_radius)"/>
+            <param name="wheel_speed" value="2.136283002"/>
+
+        </node>
+    </group>
+
+</launch>
