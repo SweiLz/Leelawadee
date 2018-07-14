@@ -3,7 +3,7 @@
     <arg name="slam_methods" default="hector" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
     <arg name="open_rviz" default="false"/>
     
-    <!-- AUNCHAN -->
+    <!-- Leelawadee -->
     <include file="$(find leelawadee_bringup)/launch/leelawadee_core.launch"/>
     
     <!-- rviz -->

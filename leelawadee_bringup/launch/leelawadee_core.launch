@@ -8,10 +8,16 @@
         <arg name="port" default="/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0"/>
 	    <arg name="baudrate" default="128000"/>
 		<>
+        
     			</include> -->
-    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.1 0.0 0.15 0.0 0.0 0.0 base_link laser 100"/>
-
-    <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
+    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.1 0.0 0.15 0.0 0.0 0.0 base_link laser 100"/> -->
+    <node pkg="leelawadee_mbed" type="robot_publish_odom" name="robot_publish_odom">
+        <param name="odom_frame" type="string" value="odom"/>
+        <param name="base_frame" type="string" value="base_link"/>
+        <param name="publish_rate" type="double" value="5.0"/>
+        <param name="publish_odometry" type="bool" value="flase"/>
+    </node>
+    <!-- <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
         <param name="serial_port" value="/dev/serial/by-id/usb-Hokuyo_Data_Flex_for_USB_URG-Series_USB_Driver-if00"/>
         <param name="serial_baud" value="115200"/>
         <param name="frame_id" value="laser"/>
@@ -20,6 +26,6 @@
         <param name="publish_multiecho" value="false"/>
         <param name="angle_min" value="-1.5707963"/>
         <param name="angle_max" value="1.5707963"/>
-    </node>
+    </node> -->
 
 </launch>

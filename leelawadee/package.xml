@@ -17,8 +17,8 @@
   <exec_depend>leelawadee_description</exec_depend>
   <!-- <exec_depend>leelawadee_example</exec_depend> -->
   <exec_depend>leelawadee_mbed</exec_depend>
-  <!-- <exec_depend>leelawadee_navigation</exec_depend> -->
-  <!-- <exec_depend>leelawadee_slam</exec_depend> -->
-  <!-- <exec_depend>leelawadee_teleop</exec_depend> -->
+  <exec_depend>leelawadee_navigation</exec_depend>
+  <exec_depend>leelawadee_slam</exec_depend>
+  <exec_depend>leelawadee_teleop</exec_depend>
   <export><metapackage/></export>
 </package>
