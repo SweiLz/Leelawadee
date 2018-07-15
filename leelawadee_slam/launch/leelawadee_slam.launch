@@ -4,7 +4,7 @@
     <arg name="open_rviz" default="false"/>
     
     <!-- Leelawadee -->
-    <include file="$(find leelawadee_bringup)/launch/leelawadee_core.launch"/>
+    <!-- <include file="$(find leelawadee_bringup)/launch/leelawadee_core.launch"/> -->
     
     <!-- rviz -->
     <group if="$(arg open_rviz)">

@@ -1,5 +1,5 @@
 <launch>
-    <arg name="map_file" default="$(find leelawadee_navigation)/maps/map_anman_f2.yaml"/>
+    <arg name="map_file" default="$(find leelawadee_navigation)/maps/map_fibo_f2.yaml"/>
     <arg name="open_rviz" default="false"/>
     
     

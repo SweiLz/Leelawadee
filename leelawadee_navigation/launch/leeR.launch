@@ -1,0 +1,7 @@
+<launch>
+    
+        <node name="rviz" pkg="rviz" type="rviz" required="true"
+              args="-d $(find leelawadee_navigation)/cfg/leelawadee_nav.rviz"/>
+    
+
+</launch>
