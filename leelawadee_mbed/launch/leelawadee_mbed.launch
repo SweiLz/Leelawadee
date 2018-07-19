@@ -8,7 +8,7 @@
 	<node name="leelawadee_mbed" pkg="rosserial_python" type="serial_node.py" output="screen">
 		<param name="port" value="$(arg port)"/>
 		<param name="baud" value="$(arg baud)"/>
-		<remap from="attitude" to="$(arg name_space)/$(arg imu_topic)"/>
-		<remap from="cmd_vel" to="$(arg name_space)/$(arg cmd_vel_topic)"/>
+		<remap from="attitude" to="$(arg imu_topic)"/>
+		<remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
 	</node>
 </launch>

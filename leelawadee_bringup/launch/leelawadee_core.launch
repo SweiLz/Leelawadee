@@ -3,16 +3,17 @@
     <arg name="wheel_separation" default="0.5"/>
     <arg name="wheel_radius" default="0.102"/>
     <arg name="use_lidar" default="true"/>
+
     <arg name="use_low_level" default="true"/>
 
     <!-- TF setting -->
-    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.105 0 0 0 /base_footprint /base_link 50"/>
-    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0.15 0 0.035 0 0 0 /base_link /laser_link 50"/>
-    <node pkg="tf" type="static_transform_publisher" name="base_link2imu_frame" args="0 0 0 0 0 0 /base_link /imu_frame 50"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0.15 0 0.035 0 0 0 base_link laser_link 20"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2imu_frame" args="-0.08 0 0.1 0 0 0 base_link imu_frame 20"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.105 0 0 0 base_footprint base_link 20"/>
 
     <!-- Lidar -->
     <group if="$(arg use_lidar)">
-        <node name="ydlidar_node" pkg="ydlidar" type="ydlidar_node" output="screen">
+        <node name="leelawadee_lidar" pkg="ydlidar" type="ydlidar_node" output="screen">
             <param name="port" type="string" value="/dev/ttyLidarG4"/>
             <!-- <param name="port" type="string" value="/dev/ttyLidarX4"/> -->
             <!-- <param name="port" type="string" value="/dev/ttyACM0"/> -->
@@ -20,8 +21,8 @@
             <param name="frame_id" type="string" value="laser_link"/>
             <param name="samp_rate" type="int" value="9"/>
             <param name="frequency" type="double" value="12.0" />
-            <param name="angle_min" type="double" value="-180" />
-            <param name="angle_max" type="double" value="180" />
+            <param name="angle_min" type="double" value="-90" />
+            <param name="angle_max" type="double" value="90" />
             <param name="range_min" type="double" value="0.3" />
             <param name="range_max" type="double" value="15.0" />
             <!-- Else -->
@@ -31,12 +32,62 @@
             <param name="resolution_fixed" type="bool" value="true"/>
             <param name="ignore_array" type="string" value="" />
         </node>
+        <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="laser2odometry">
+            <param name="laser_scan_topic" value="/scan"/>
+            <param name="odom_topic" value="/odom_rf2o" />
+            <param name="publish_tf" value="false" />
+            <param name="base_frame_id" value="base_footprint"/>
+            <param name="odom_frame_id" value="odom" />
+            <param name="init_pose_from_topic" value="" />
+            <param name="freq" value="20.0"/>
+            <param name="verbose" value="true"/>
+        </node>
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" output="screen">
+            <param name="map_frame" value="map"/>
+            <param name="odom_frame" value="odom"/>
+            <param name="world_frame" value="odom"/>
+            <param name="base_link_frame" value="base_footprint"/>
+
+            <param name="odom0" value="/odom_rf2o"/>
+            <rosparam param="odom0_config">  
+    [true, true,  false,                                  
+    false, false, true,  
+    true, false, false,
+    false, false, true,
+    false, false, false]
+            </rosparam>
+            <param name="odom0_differential" value="true"/>
+
+            <param name="imu0" value="/imu_data"/>
+            <rosparam param="imu0_config">  
+    [false, false, false,
+     false,  false,  true,                                                    
+     false, false, false,
+     false,  false,  true,                                                    
+     true,  true,  false]                                                    
+            </rosparam>
+
+            <param name="imu0_differential" value="true"/>
+            <param name="imu0_remove_gravitational_acceleration" value="true"/>
+            <param name="transform_timeout" value="0.1"/>
+            <param name="print_diagnostics" value="false"/>
+            <param name="frequency" value="10"/>
+            <param name="two_d_mode" value="true"/>
+        </node>
+
     </group>
 
     <group if="$(arg use_low_level)">
         <include file="$(find leelawadee_mbed)/launch/leelawadee_mbed.launch">
             <arg name="port" value="/dev/ttySTM32"/>
             <arg name="baud" value="115200"/>
+            <!-- <arg name="name_space" value=""/> -->
+            <arg name="imu_topic" value="imu_data"/>
+            <!-- <arg name="cmd_vel_topic" value="cmd_vel"/> -->
+        </include>
+        <include file="$(find leelawadee_mbed)/launch/leelawadee_onboard.launch">
+            <arg name="wheel_separation" value="$(arg wheel_separation)"/>
+            <arg name="wheel_radius" value="$(arg wheel_radius)"/>
             <!-- <arg name="name_space" value=""/> -->
             <!-- <arg name="imu_topic" value="attitude"/> -->
             <!-- <arg name="cmd_vel_topic" value="cmd_vel"/> -->

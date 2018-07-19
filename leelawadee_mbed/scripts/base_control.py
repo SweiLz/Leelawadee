@@ -8,7 +8,6 @@ import math
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 
-
 class BaseControl(object):
     def __init__(self):
         self.baseId = rospy.get_param("~base_id", "base_footprint")
@@ -32,23 +31,11 @@ class BaseControl(object):
 
         self.sub = rospy.Subscriber(
             "cmd_vel", Twist, self.cmdCB, queue_size=10)
-        self.pub = rospy.Publisher(self.odom_topic, Odometry, queue_size=10)
-        self.timer_odom = rospy.Timer(rospy.Duration(
-            1.0/self.odom_freq), self.timerOdomCB)
         self.timer_cmd = rospy.Timer(rospy.Duration(
             1.0/self.cmd_freq), self.timerCmdCB)
-        self.tf_broadcaster = tf.TransformBroadcaster()
-
 
         self.trans_x = 0.0
         self.rotat_z = 0.0
-        self.sendWL = 0.0
-        self.sendWR = 0.0
-        self.current_time = rospy.Time.now()
-        self.previous_time = self.current_time
-        self.pose_x = 0.0
-        self.pose_y = 0.0
-        self.pose_th = 0.0
 
     def cmdCB(self, msg):
         self.trans_x = msg.linear.x
@@ -69,48 +56,6 @@ class BaseControl(object):
         command = "#1P{}#2P{}T1\r\n".format(int(speedL), int(speedR))
         # rospy.logwarn(command)
         self.serial.write(command)
-
-    def timerOdomCB(self, event):
-        # speedL = self.sendWL * self.wheelRad
-        # speedR = self.sendWR * self.wheelRad
-        # speedTh = (speedR - speedL)/self.wheelSep
-        # speedX = (speedR + speedL)/2.0
-
-        self.current_time = rospy.Time.now()
-        dt = (self.current_time - self.previous_time).to_sec()
-        self.previous_time = self.current_time
-        # self.pose_x += (speedX * math.cos(self.pose_th) * dt)
-        # self.pose_y += (speedX * math.sin(self.pose_th) * dt)
-        # self.pose_th += (speedTh * dt)
-        self.pose_x += (self.trans_x * math.cos(self.pose_th) * dt)
-        self.pose_y += (self.trans_x * math.sin(self.pose_th) * dt)
-        self.pose_th += (self.rotat_z * dt)
-        pose_quat = tf.transformations.quaternion_from_euler(
-            0, 0, self.pose_th)
-
-        msg = Odometry()
-        msg.header.stamp = self.current_time
-        msg.header.frame_id = self.odomId
-        msg.child_frame_id = self.baseId
-        msg.pose.pose.position.x = self.pose_x
-        msg.pose.pose.position.y = self.pose_y
-        msg.pose.pose.orientation.x = pose_quat[0]
-        msg.pose.pose.orientation.y = pose_quat[1]
-        msg.pose.pose.orientation.z = pose_quat[2]
-        msg.pose.pose.orientation.w = pose_quat[3]
-        # msg.twist.twist.linear.x = speedX
-        # msg.twist.twist.angular.z = speedTh
-        msg.twist.twist.linear.x = self.trans_x
-        msg.twist.twist.angular.z = self.rotat_z
-        for i in range(36):
-            msg.twist.covariance[i] = 0
-        msg.twist.covariance[0] = 1.0  # speedX Cov
-        msg.twist.covariance[35] = 1.0  # speedTh Cov
-        msg.pose.covariance = msg.twist.covariance
-        self.pub.publish(msg)
-
-        self.tf_broadcaster.sendTransform(
-            (self.pose_x, self.pose_y, 0.0), pose_quat, self.current_time, self.baseId, self.odomId)
 
 
 if __name__ == '__main__':

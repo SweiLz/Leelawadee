@@ -6,7 +6,7 @@
 	<arg name="base_id" default="base_footprint"/>
 	<arg name="wheel_separation" default="0.5"/>
     <arg name="wheel_radius" default="0.102"/>
-	<node name="leelawadee_mbed" pkg="leelawadee_mbed" type="base_control.py" output="screen">
+	<node name="leelawadee_mbed_onboard" pkg="leelawadee_mbed" type="base_control.py" output="screen">
 
             <param name="base_id" value="$(arg base_id)"/>
             <param name="odom_id" value="odom"/>
@@ -17,7 +17,7 @@
 			<remap from="cmd_vel" to="$(arg name_space)/$(arg cmd_vel_topic)"/>
 
             <!-- <param name="port" value="/dev/ttySTM32"/> -->
-            <param name="port" value="/dev/ttyUSB0"/>
+            <param name="port" value="/dev/ttyMotor"/>
             <param name="baudrate" value="115200"/>
             <param name="wheel_separation" value="$(arg wheel_separation)"/>
             <param name="wheel_radius" value="$(arg wheel_radius)"/>

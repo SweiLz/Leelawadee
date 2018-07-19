@@ -12,19 +12,23 @@
 	<url type="repository">https://github.com/SweiLz/Leelawadee</url>
 	<url type="bugtracker">https://github.com/SweiLz/Leelawadee/issues</url>
 	<buildtool_depend>catkin</buildtool_depend>
+
 	<build_depend>roscpp</build_depend>
 	<build_depend>std_msgs</build_depend>
 	<build_depend>sensor_msgs</build_depend>
 	<build_depend>diagnostic_msgs</build_depend>
+	<build_depend>ydlidar</build_depend>
+	<build_depend>robot_localization</build_depend>
 	<build_export_depend>roscpp</build_export_depend>
 	<build_export_depend>std_msgs</build_export_depend>
 	<build_export_depend>sensor_msgs</build_export_depend>
 	<build_export_depend>diagnostic_msgs</build_export_depend>
+	<build_export_depend>ydlidar</build_export_depend>
+	<build_export_depend>robot_localization</build_export_depend>
 	<exec_depend>roscpp</exec_depend>
 	<exec_depend>std_msgs</exec_depend>
 	<exec_depend>sensor_msgs</exec_depend>
 	<exec_depend>diagnostic_msgs</exec_depend>
-	<build_depend>ydlidar</build_depend>
-	<build_export_depend>ydlidar</build_export_depend>
 	<exec_depend>ydlidar</exec_depend>
+	<exec_depend>robot_localization</exec_depend>
 </package>

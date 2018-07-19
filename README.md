@@ -14,7 +14,11 @@ ROS Robot indoor navigation
 cd ~/catkin_ws/src
 git clone https://github.com/SweiLz/Leelawadee.git
 git clone https://github.com/EAIBOT/ydlidar.git
+git clone https://github.com/MAPIRlab/rf2o_laser_odometry.git
 ```
+
+
+
 
 1. Install all package dependencies
 ```
@@ -22,8 +26,12 @@ cd ~/catkin_ws
 rosdep install --from-paths src --ignore-src -r -y
 ```
 > sudo apt install ros-kinetic-urdf
+
 > sudo apt install ros-kinetic-tf
+
 > sudo apt install ros-kinetic-xacro
+
+> sudo apt install ros-kinetic-robot-localization
 
 1. Make
 ```
