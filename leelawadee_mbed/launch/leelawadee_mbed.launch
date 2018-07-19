@@ -1,10 +1,14 @@
 <launch>
+
 	<arg name="port" default="/dev/ttySTM32"/>
-	<arg name="baud" default="250000"/>
+	<arg name="baud" default="115200"/>
+	<arg name="name_space" default=""/>
 	<arg name="imu_topic" default="attitude"/>
+	<arg name="cmd_vel_topic" default="cmd_vel"/>
 	<node name="leelawadee_mbed" pkg="rosserial_python" type="serial_node.py" output="screen">
-		<remap from="attitude" to="$(arg imu_topic)"/>
 		<param name="port" value="$(arg port)"/>
 		<param name="baud" value="$(arg baud)"/>
+		<remap from="attitude" to="$(arg name_space)/$(arg imu_topic)"/>
+		<remap from="cmd_vel" to="$(arg name_space)/$(arg cmd_vel_topic)"/>
 	</node>
 </launch>

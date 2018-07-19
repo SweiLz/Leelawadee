@@ -1,16 +1,5 @@
 <launch>
-    <!--	<include file="$(find leelawadee_mbed)/launch/leelawadee_mbed.launch">
-		<arg name="imu_topic" value="imu/data"/> 
-		<arg name="port" value="/dev/ttySTM32"/>
-		<arg name="baud" value="250000"/>
-	</include> -->
-    <!-- <include file="$(find ydlidar)/launch/lidar.launch">
-        <arg name="port" default="/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0"/>
-	    <arg name="baudrate" default="128000"/>
-		<>
-        
-    			</include> -->
-    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.1 0.0 0.15 0.0 0.0 0.0 base_link laser 100"/> -->
+   
     <node pkg="leelawadee_mbed" type="robot_publish_odom" name="robot_publish_odom">
         <param name="odom_frame" type="string" value="odom"/>
         <param name="base_frame" type="string" value="base_link"/>
