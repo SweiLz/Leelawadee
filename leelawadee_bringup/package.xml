@@ -24,4 +24,7 @@
 	<exec_depend>std_msgs</exec_depend>
 	<exec_depend>sensor_msgs</exec_depend>
 	<exec_depend>diagnostic_msgs</exec_depend>
+	<build_depend>ydlidar</build_depend>
+	<build_export_depend>ydlidar</build_export_depend>
+	<exec_depend>ydlidar</exec_depend>
 </package>

@@ -1,0 +1,27 @@
+<launch>
+
+	<arg name="name_space" default=""/>
+	<!-- <arg name="imu_topic" default="attitude"/> -->
+	<arg name="cmd_vel_topic" default="cmd_vel"/>
+	<arg name="base_id" default="base_footprint"/>
+	<arg name="wheel_separation" default="0.5"/>
+    <arg name="wheel_radius" default="0.102"/>
+	<node name="leelawadee_mbed" pkg="leelawadee_mbed" type="base_control.py" output="screen">
+
+            <param name="base_id" value="$(arg base_id)"/>
+            <param name="odom_id" value="odom"/>
+            <param name="odom_topic" value="/odom"/>
+            <param name="odom_freq" value="20"/>
+            <param name="cmd_freq" value="10"/>
+			<!-- <remap from="attitude" to="$(arg name_space)/$(arg imu_topic)"/> -->
+			<remap from="cmd_vel" to="$(arg name_space)/$(arg cmd_vel_topic)"/>
+
+            <!-- <param name="port" value="/dev/ttySTM32"/> -->
+            <param name="port" value="/dev/ttyUSB0"/>
+            <param name="baudrate" value="115200"/>
+            <param name="wheel_separation" value="$(arg wheel_separation)"/>
+            <param name="wheel_radius" value="$(arg wheel_radius)"/>
+            <param name="wheel_speed" value="2.136283002"/>
+
+        </node>
+</launch>
