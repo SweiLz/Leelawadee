@@ -6,7 +6,6 @@
     <arg name="use_lidar" default="false"/>
     <arg name="use_low_level" default="true"/>
 
-
     <!-- TF setting -->
     <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.105 0 0 0 /base_footprint /base_link 50"/>
     <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0.15 0 0.035 0 0 0 /base_link /laser_link 50"/>
