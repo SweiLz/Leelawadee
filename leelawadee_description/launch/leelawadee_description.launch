@@ -1,15 +1,21 @@
 <launch>
     <!-- Load the URDF/Xacro model -->
-    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find leelawadee_description)/urdf/leelawadee_base/leelawadee_base.xacro'"/>
+    <arg name="urdf_file" default="$(find xacro)/xacro '$(find leelawadee_description)/urdf/leelawadee_base/leelawadee_base.xacro'"/>
     <param name="robot_description" command="$(arg urdf_file)"/>
 
     <!-- Publish the robot state -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
-        <param name="publish_frequency" value="20.0"/>
+        <!-- <param name="tf_prefix" value="liews"/> -->
+        <param name="publish_frequency" value="20"/>
+         <!-- <param name="ignore_timestamp" value="true"/> -->
+        <param name="use_tf_static" value="false"/>
     </node>
 
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-        <param name="rate" value="20.0"/>
-    </node>
+    <!-- send fake joint values -->
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node> -->
 
+    <!-- Show in Rviz   -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find leelawadee_description)/cfg/robot_view.rviz"/> -->
 </launch>
